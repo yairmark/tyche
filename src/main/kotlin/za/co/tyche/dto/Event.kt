@@ -4,8 +4,10 @@ import java.time.LocalDate
 
 data class Event(val description: String, val startDate: LocalDate, val endDate: LocalDate) {
 
-    companion object {
-        val EMPTY_EVENT = Event("", LocalDate.MIN, LocalDate.MAX)
+    init {
+        require(startDate < endDate) { "Start date must be before end date. StartDate: [${startDate}], EndDate: [${endDate}]" }
+        require(description.isNotBlank()) { "Description cannot be empty" }
     }
+
 }
 

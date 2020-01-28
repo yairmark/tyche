@@ -1,5 +1,7 @@
 package za.co.tyche.dto
 
-import za.co.tyche.dto.market.Outcome
-
-data class Bet(val market: Market, val outcome: Outcome, val amount: Double)
+data class Bet(val outcome: Outcome, val amount: Double) {
+    init {
+        require(amount > 0) { "A bet cannot be zero or negative" }
+    }
+}
