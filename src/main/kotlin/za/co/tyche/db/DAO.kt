@@ -86,6 +86,7 @@ class DAO {
         val betId = randomID()
 
         val updatedMarket = market.placeBet(bet)
+        markets[marketId]= updatedMarket
 
         bets[betId] = bet
         val currentMarketBets = marketBets.getOrDefault(marketId, mutableSetOf())
