@@ -7,7 +7,7 @@ import za.co.tyche.stub.ExamplePDFData.drawOutcome
 import za.co.tyche.stub.ExamplePDFData.liverpoolWinOutcome
 import za.co.tyche.stub.ExamplePDFData.manUtdWinOutcome
 
-class ActiveMarketTest : FreeSpec({
+class MarketTest : FreeSpec({
 
     "calculateResultFor_pdfManUtdWin_outputsManUtdesults" {
         val expectedManUtdWinResult = Result("ManUtd Win", 10.00, 7.50)

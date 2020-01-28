@@ -1,6 +1,9 @@
 package za.co.tyche.stub
 
-import za.co.tyche.domain.*
+import za.co.tyche.domain.Bet
+import za.co.tyche.domain.Event
+import za.co.tyche.domain.Market
+import za.co.tyche.domain.Outcome
 import java.time.LocalDateTime
 import java.time.Month
 
@@ -22,8 +25,7 @@ object ExamplePDFData {
 
     )
 
-    val activeMarket: ActiveMarket = Market.newMarket("ManUtd vs Liverpool Jan 2020", event, outcomes)
-            .activate()
+    val activeMarket: Market = Market.newMarket("ManUtd vs Liverpool Jan 2020", event, outcomes)
             .placeBet(Bet(manUtdWinOutcome, 5.0))
             .placeBet(Bet(liverpoolWinOutcome, 2.0))
             .placeBet(Bet(liverpoolWinOutcome, 4.5))
