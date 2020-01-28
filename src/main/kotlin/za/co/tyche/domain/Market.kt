@@ -2,7 +2,7 @@ package za.co.tyche.domain
 
 import java.util.*
 
-data class Market internal constructor(val description: String, val outcomes: Set<Outcome>, val event: Event, private val bets: Map<Outcome, Double> = mapOf()) {
+data class Market internal constructor(val description: String, val outcomes: Set<Outcome>, val event: Event, val bets: Map<Outcome, Double> = mapOf()) {
 
     init {
         require(description.isNotBlank()) { "Description cannot be empty" }

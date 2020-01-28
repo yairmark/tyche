@@ -2,12 +2,14 @@ package za.co.tyche.service
 
 import io.kotlintest.matchers.collections.shouldBeEmpty
 import io.kotlintest.matchers.collections.shouldNotBeEmpty
+import io.kotlintest.matchers.maps.shouldContain
 import io.kotlintest.matchers.types.shouldBeNull
 import io.kotlintest.matchers.types.shouldNotBeNull
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldThrow
 import io.kotlintest.specs.FreeSpec
 import za.co.tyche.db.DAO
+import za.co.tyche.domain.Bet
 import za.co.tyche.domain.Event
 import za.co.tyche.domain.Outcome
 import za.co.tyche.stub.FixedDates
@@ -93,12 +95,51 @@ class DAOTest : FreeSpec({
         val dao = DAO()
         val outcomes = setOf(Outcome("Outcome 1", 0.6), Outcome("Outcome 2", 0.7))
         val eventId = dao.createEvent("foo event", FixedDates.now, FixedDates.nowPlus10Days)
-        val marketId1 = dao.createMarket("foo bar market", outcomes, eventId)
-        val marketId2 = dao.createMarket("foo bar market 2", outcomes, eventId)
+        dao.createMarket("foo bar market", outcomes, eventId)
+        dao.createMarket("foo bar market 2", outcomes, eventId)
 
         val allMarketsForEventId = dao.getAllMarketsForEventId(eventId)
         allMarketsForEventId.shouldNotBeEmpty()
         allMarketsForEventId.map { it.description }.toSet().shouldBe(setOf("foo bar market", "foo bar market 2"))
+    }
+
+    "placeBet_validInputs_returnsBetId" {
+        val dao = DAO()
+        val outcomes = setOf(Outcome("Outcome 1", 0.6), Outcome("Outcome 2", 0.7))
+        val eventId = dao.createEvent("foo event", FixedDates.now, FixedDates.nowPlus10Days)
+        val marketId = dao.createMarket("foo bar market", outcomes, eventId)
+
+        val betId = dao.placeBet(marketId, "Outcome 1", 10.20)
+
+        betId.length.shouldBe(36)
+    }
+
+
+    "placeBet_validInputs_updatesTheAssociatedMarketsBet" {
+        val dao = DAO()
+        val outcomes = setOf(Outcome("Outcome 1", 0.6), Outcome("Outcome 2", 0.7))
+        val eventId = dao.createEvent("foo event", FixedDates.now, FixedDates.nowPlus10Days)
+        val marketId = dao.createMarket("foo bar market", outcomes, eventId)
+
+        dao.placeBet(marketId, "Outcome 1", 10.20)
+
+        val (_, _, _, updatedBets) = dao.getMarketById(marketId)!!
+
+        updatedBets.shouldContain(Outcome("Outcome 1", 0.6), 10.20)
+    }
+
+    "getBetById_idExists_returnsBet"{
+        val dao = DAO()
+        val outcomes = setOf(Outcome("Outcome 1", 0.6), Outcome("Outcome 2", 0.7))
+        val eventId = dao.createEvent("foo event", FixedDates.now, FixedDates.nowPlus10Days)
+        val marketId = dao.createMarket("foo bar market", outcomes, eventId)
+        val betId = dao.placeBet(marketId, "Outcome 1", 10.20)
+
+        val betById = dao.getBetById(betId)
+
+        betById.shouldNotBeNull()
+        betById.shouldBe(Bet(Outcome("Outcome 1", 0.6), 10.20))
+
     }
 
 
