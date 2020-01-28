@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 data class Result(val description: String, val payout: Double, val takings: Double) {
     override fun toString(): String {

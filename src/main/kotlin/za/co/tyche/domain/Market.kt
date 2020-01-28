@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 data class Market internal constructor(val description: String, val outcomes: Set<Outcome>, val event: Event) {
     init {

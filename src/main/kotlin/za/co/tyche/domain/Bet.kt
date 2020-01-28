@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 data class Bet(val outcome: Outcome, val amount: Double) {
     init {

@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 data class ActiveMarket internal constructor(private val market: Market, private val bets: Map<Outcome, Double> = mapOf()) {
 

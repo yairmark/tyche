@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 import java.time.LocalDateTime
 

@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 data class Outcome(val description: String, val probability: Double) {
     init {

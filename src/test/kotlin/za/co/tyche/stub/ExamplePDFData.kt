@@ -1,6 +1,6 @@
 package za.co.tyche.stub
 
-import za.co.tyche.dto.*
+import za.co.tyche.domain.*
 import java.time.LocalDateTime
 import java.time.Month
 

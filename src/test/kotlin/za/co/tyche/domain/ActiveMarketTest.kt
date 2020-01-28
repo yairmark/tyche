@@ -1,4 +1,4 @@
-package za.co.tyche.dto
+package za.co.tyche.domain
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
