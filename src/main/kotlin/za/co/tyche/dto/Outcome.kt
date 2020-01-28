@@ -8,8 +8,5 @@ data class Outcome(val description: String, val probability: Double) {
 
     fun decimalOdds() = (1.0 / this.probability)
 
-    fun createMarket(marketDescription: String, outcome: Outcome): Market {
-        return Market(marketDescription, setOf(this, outcome))
-    }
 }
 
