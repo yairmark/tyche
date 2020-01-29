@@ -1,11 +1,11 @@
 package za.co.tyche.domain
 
-import java.util.*
-
 data class Market internal constructor(val description: String, val outcomes: Set<Outcome>, val event: Event, val bets: Map<Outcome, Double> = mapOf()) {
 
     init {
         require(description.isNotBlank()) { "Description cannot be empty" }
+        require(outcomes.size >= 2) { "At least 2 outcomes need to be provided but ${outcomes.size} was/were instead" }
+        require(outcomes.sumByDouble { it.probability } > 1.0) { "The probabilities in a market must be greater than 1" }
     }
 
     operator fun plus(outcome: Outcome): Market {
@@ -45,13 +45,5 @@ data class Market internal constructor(val description: String, val outcomes: Se
         val takings = totalPot - bet
 
         return Result(outcome.description, payout, takings)
-    }
-
-    companion object {
-        fun newMarket(description: String, event: Event, outcomes: Set<Outcome>): Market {
-            require(outcomes.size >= 2) { "At least 2 outcomes need to be provided but ${outcomes.size} were instead" }
-            require(outcomes.sumByDouble { it.probability } > 1.0) { "The probabilities in a market must be greater than 1" }
-            return Market(description, outcomes, event)
-        }
     }
 }

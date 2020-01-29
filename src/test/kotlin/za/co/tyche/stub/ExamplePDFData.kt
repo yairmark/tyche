@@ -25,7 +25,7 @@ object ExamplePDFData {
 
     )
 
-    val activeMarket: Market = Market.newMarket("ManUtd vs Liverpool Jan 2020", event, outcomes)
+    val activeMarket: Market = Market("ManUtd vs Liverpool Jan 2020", outcomes, event)
             .placeBet(Bet(manUtdWinOutcome, 5.0))
             .placeBet(Bet(liverpoolWinOutcome, 2.0))
             .placeBet(Bet(liverpoolWinOutcome, 4.5))
