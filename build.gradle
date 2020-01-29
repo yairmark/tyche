@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
     }
 }
 
@@ -19,6 +20,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 
@@ -41,6 +43,30 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+shadowJar {
+    baseName = 'shadow'
+    classifier = ''
+    archiveVersion = ''
+    mergeServiceFiles {}
+
+
+    manifest {
+        attributes "Main-Class": "za.co.tyche.Main"
+    }
+}
+
+task runFinalJar(type: JavaExec) {
+    classpath = files('build/libs/shadow.jar')
+    classpath += sourceSets.main.runtimeClasspath
+    main = 'za.co.tyche.Main'
+}
+
+tasks {
+    build {
+        dependsOn(shadowJar, runFinalJar)
+    }
 }
 
 test {
